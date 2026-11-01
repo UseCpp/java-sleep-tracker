@@ -1,9 +1,6 @@
 package ru.yandex.practicum.sleeptracker.session;
 
-import java.time.DateTimeException;
-import java.time.Duration;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.time.format.ResolverStyle;
 import java.util.Optional;
@@ -43,9 +40,17 @@ public record SleepingSession(LocalDateTime bedtime, LocalDateTime wakeup, Quali
         return Duration.between(bedtime, wakeup).toMinutes();
     }
 
-    /// Проверка, что сон был в одном дне
+    /// Проверка, что сон был в одном дне.
+    /// Если пользователь проснулся ровно в полночь, то это все еще один день сна
     public boolean isOneDaySession() {
-        return bedtime.toLocalDate().equals(wakeup.toLocalDate());
+        var bedtimeDate = bedtime.toLocalDate();
+        var wakeupDate = wakeup.toLocalDate();
+        if (bedtimeDate.equals(wakeupDate)) {
+            return true;
+        }
+
+        return bedtimeDate.plusDays(1).equals(wakeupDate) &&
+                wakeup.toLocalTime().equals(LocalTime.MIDNIGHT);
     }
 
     /// Сессия дневного сна - засыпание после 6:00 и сон в пределах одного дня

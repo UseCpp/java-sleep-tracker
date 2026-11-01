@@ -23,7 +23,11 @@ public class SleeplessNightCounter implements SleepAnalyzer<Long> {
         if (!trackingStart.toLocalTime().isBefore(LocalTime.NOON)) {
             firstNight = firstNight.plusDays(1);
         }
-        var lastNight = sleepingSessions.getLast().wakeup().toLocalDate();
+        var lastWakeup = sleepingSessions.getLast().wakeup();
+        var lastNight = lastWakeup.toLocalDate();
+        if (lastWakeup.toLocalTime().equals(LocalTime.MIDNIGHT)) {
+            lastNight = lastNight.minusDays(1);
+        }
 
         if (firstNight.isAfter(lastNight)) {
             return new SleepAnalysisResult<>(DESCRIPTION, 0L);

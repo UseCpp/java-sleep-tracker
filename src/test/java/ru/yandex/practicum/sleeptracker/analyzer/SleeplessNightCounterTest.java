@@ -101,6 +101,16 @@ class SleeplessNightCounterTest {
     }
 
     @Test
+    void shouldReturnZeroWhenBedtimeAfterNoonAndWakeupIsMidnight() {
+        assertEquals(0, count("01.10.25 13:00;02.10.25 00:00;GOOD"));
+    }
+
+    @Test
+    void shouldReturnOneWhenBedtimeBeforeNoonAndWakeupIsMidnight() {
+        assertEquals(1, count("01.10.25 11:00;02.10.25 00:00;GOOD"));
+    }
+
+    @Test
     void shouldReturnZeroForEmptyLog() {
         assertEquals(0L, counter.apply(List.of()).result());
     }
