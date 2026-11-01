@@ -57,6 +57,13 @@ class SleepingSessionLoaderTest {
 
     @Test
     void shouldFailOnInvalidDate() throws Exception {
+        Path file = createLog("31.10.25 22:15;32.10.25 08:00;GOOD\n");
+
+        assertThrows(SleepingSessionLoadException.class, () -> loader.load(file.toString()));
+    }
+
+    @Test
+    void shouldFailOnInvalidFormatDate() throws Exception {
         Path file = createLog("01.10.2025 22:15;02.10.25 08:00;GOOD\n");
 
         assertThrows(SleepingSessionLoadException.class, () -> loader.load(file.toString()));

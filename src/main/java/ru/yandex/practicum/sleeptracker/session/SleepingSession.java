@@ -5,11 +5,13 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.ResolverStyle;
 import java.util.Optional;
 
 public record SleepingSession(LocalDateTime bedtime, LocalDateTime wakeup, Quality quality) {
 
-    public static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd.MM.yy HH:mm");
+    public static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd.MM.uu HH:mm")
+            .withResolverStyle(ResolverStyle.STRICT);
 
     /// Разбор строки формата `dd.MM.yy HH:mm;dd.MM.yy HH:mm;QUALITY`
     ///
