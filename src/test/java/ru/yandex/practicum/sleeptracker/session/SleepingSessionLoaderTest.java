@@ -33,12 +33,12 @@ class SleepingSessionLoaderTest {
         assertEquals(new SleepingSession(
                 LocalDateTime.of(2025, 10, 1, 22, 15),
                 LocalDateTime.of(2025, 10, 2, 8, 0),
-                SleepingSession.Quality.GOOD), sessions.getFirst());
+                Quality.GOOD), sessions.getFirst());
 
         assertEquals(new SleepingSession(
                 LocalDateTime.of(2025, 10, 3, 23, 30),
                 LocalDateTime.of(2025, 10, 4, 6, 20),
-                SleepingSession.Quality.BAD), sessions.getLast());
+                Quality.BAD), sessions.getLast());
     }
 
     @Test

@@ -1,6 +1,7 @@
 package ru.yandex.practicum.sleeptracker.analyzer;
 
 import org.junit.jupiter.api.Test;
+import ru.yandex.practicum.sleeptracker.session.Quality;
 import ru.yandex.practicum.sleeptracker.session.SleepingSession;
 
 import java.time.LocalDateTime;
@@ -13,7 +14,7 @@ class SleepingSessionCounterTest {
 
     private final SleepingSessionCounter counter = new SleepingSessionCounter();
 
-    private static final SleepingSession DUMMY_SESSION = new SleepingSession(LocalDateTime.now(), LocalDateTime.now().plusDays(1), SleepingSession.Quality.GOOD);
+    private static final SleepingSession DUMMY_SESSION = new SleepingSession(LocalDateTime.now(), LocalDateTime.now().plusDays(1), Quality.GOOD);
 
     @Test
     void shouldReturnZeroForEmptyLog() {

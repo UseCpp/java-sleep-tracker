@@ -11,12 +11,6 @@ public record SleepingSession(LocalDateTime bedtime, LocalDateTime wakeup, Quali
 
     public static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd.MM.yy HH:mm");
 
-    public enum Quality {
-        GOOD,
-        NORMAL,
-        BAD
-    }
-
     /// Разбор строки формата `dd.MM.yy HH:mm;dd.MM.yy HH:mm;QUALITY`
     ///
     /// @throws IllegalArgumentException если строку невозможно разобрать
@@ -27,7 +21,7 @@ public record SleepingSession(LocalDateTime bedtime, LocalDateTime wakeup, Quali
         }
         var bedtime = parseDateTime(parts[0], line);
         var wakeup = parseDateTime(parts[1], line);
-        var quality = parseQuality(parts[2], line);
+        var quality = Quality.parseFrom(parts[2], line);
         if (wakeup.isBefore(bedtime)) {
             throw new IllegalArgumentException("Время пробуждения раньше времени засыпания: " + line);
         }
@@ -39,14 +33,6 @@ public record SleepingSession(LocalDateTime bedtime, LocalDateTime wakeup, Quali
             return LocalDateTime.parse(value.trim(), FORMATTER);
         } catch (DateTimeException e) {
             throw new IllegalArgumentException("Неверный формат даты в строке: " + line, e);
-        }
-    }
-
-    private static Quality parseQuality(String value, String line) {
-        try {
-            return Quality.valueOf(value.trim());
-        } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException("Неизвестное качество сна в строке: " + line, e);
         }
     }
 
